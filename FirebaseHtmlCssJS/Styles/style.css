@@ -1,23 +1,21 @@
 body {
     display: flex;
+    flex-direction: column;
     background: radial-gradient(circle at center, #F2F2F2, #BEBEBE);
-    
+    align-items: center;
     
 }
 
 #DadosDIV {
-    position: absolute;
+    display: flex;
+    flex-direction: column;
     width: 400px;
     height: auto;
-    top: 15%;
-    left: 44.6%;
+    align-items: center;
     
 }
 
 #TableDIV {
-    position: absolute;
-    top: 55%;
-    left: 45%;
     width: auto;
     height: auto;
     
@@ -25,41 +23,36 @@ body {
 
 
 #H1 {
-    position: absolute;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    transform: translate(98%);
     font-size: 65px;
 }
 
 #inputId {
     margin-top: 7px;
-    transform: translate(40%);
+    
 }
 
 #inputName {
     margin-top: 7px;
     margin-bottom: 5px;
-    transform: translate(40%);
+    
 }
 
 #inputAge {
     margin-bottom: 5px;
-    transform: translate(40%);
-}
-
-#removeId {
-    transform: translate(40%);
-}
-
-#btnSalvaDado {
-    transform: translate(83%);
-}
-
-#btnRemoveID {
-    transform: translate(67%);
+    
 }
 
 
+#Imagem{
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50px;
+    border: 2px black solid;
+    right: 135px;
+    top: 65px;
+}
 
 input {
     border: 2px solid #ccc;

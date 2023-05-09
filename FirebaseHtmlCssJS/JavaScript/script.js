@@ -1,12 +1,15 @@
 import { onValue, remove, set, ref, get } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
-import { db } from "./FirebaseConfig.js";
+import { uploadBytes, ref as sRef, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-storage.js";
+import { db, storage } from "./FirebaseConfig.js";
 
 window.salvarDado = () => salvarDado();
 window.removerDado = () => removerDado();
 window.showComRemocao = () => showComRemocao();
 window.esconderTabela = () => esconderTabela();
+window.uploadImage = () => uploadImage();
+window.showImage = () => showImage();
 
-
+//Databse - Fireabase
 //Parte Logica para Salvar e Remover dados do Database
 function salvarDado() {
     let inputId = document.getElementById("inputId").value;
@@ -107,6 +110,61 @@ function esconderTabela() {
     const tbody = tabela.getElementsByTagName('tbody')[0];
     tbody.innerHTML = '';
 }
+
+
+
+
+
+//Storage - Firebase
+
+function uploadImage() {
+    let inputFile = document.getElementById('inputFile').files[0];
+    let storageRef = sRef(storage, inputFile.name);
+    uploadBytes(storageRef, inputFile).then((snapshot) => {
+        console.log("Sucesso");
+    })
+
+
+}
+
+function showImage() {
+    let storageRef = sRef(storage, "neydejuju.jpg");
+    getDownloadURL(storageRef)
+        .then((url) => {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = (event) => {
+                const blob = xhr.response;
+            };
+            xhr.open('GET', url);
+            xhr.send();
+            console.log(url);
+
+            // Or inserted into an <img> element
+            const img = document.getElementById('Imagem');
+            window.localStorage.setItem('imagem', url);
+            img.setAttribute('src', url);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+
+}
+
+function onload(){
+
+    const img = document.getElementById('Imagem');
+    let url = window.localStorage.getItem('imagem');
+    img.setAttribute('src', url);
+
+}
+    
+
+
+
+
+
 
 
 
