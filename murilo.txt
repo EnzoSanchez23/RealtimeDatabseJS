@@ -1,0 +1,92 @@
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Atualize com a URL do seu servidor Socket.IO
+
+const Game = () => {
+  const [player1Choice, setPlayer1Choice] = useState(null);
+  const [player2Choice, setPlayer2Choice] = useState(null);
+  const [winner, setWinner] = useState(null);
+
+  useEffect(() => {
+    // Ouvinte de evento para receber a escolha do oponente
+    socket.on('opponentChoice', opponentChoice => {
+      setPlayer2Choice(opponentChoice);
+      determineWinner(player1Choice, opponentChoice);
+    });
+
+    // Função de limpeza para remover o ouvinte de evento
+    return () => {
+      socket.off('opponentChoice');
+    };
+  }, [player1Choice]);
+
+  const handleChoice = choice => {
+    setPlayer1Choice(choice);
+    socket.emit('playerChoice', choice);
+  };
+
+  const determineWinner = (choice1, choice2) => {
+    // Lógica para determinar o vencedor
+    // Implemente a lógica completa do jogo aqui
+
+    // Exemplo de lógica para Pedra, Papel e Tesoura
+    if (choice1 === choice2) {
+      setWinner('Empate');
+    } else if (
+      (choice1 === 'pedra' && choice2 === 'tesoura') ||
+      (choice1 === 'papel' && choice2 === 'pedra') ||
+      (choice1 === 'tesoura' && choice2 === 'papel')
+    ) {
+      setWinner('Player 1');
+    } else {
+      setWinner('Player 2');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Jokenpô</h1>
+      <div>
+        <h3>Player 1</h3>
+        <button onClick={() => handleChoice('pedra')}>Pedra</button>
+        <button onClick={() => handleChoice('papel')}>Papel</button>
+        <button onClick={() => handleChoice('tesoura')}>Tesoura</button>
+      </div>
+      <div>
+        <h3>Player 2</h3>
+        {player2Choice ? (
+          <p>{player2Choice}</p>
+        ) : (
+          <p>Aguardando escolha do oponente...</p>
+        )}
+      </div>
+      {winner && <h2>Resultado: {winner}</h2>}
+    </div>
+  );
+};
+
+export default Game;
+
+===========================================================================================
+
+import React from 'react';
+import Game from './Game';
+
+const App = () => {
+  return (
+    <div>
+      <Game />
+    </div>
+  );
+};
+
+export default App;
+
+======================================================================================
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+
+ReactDOM.render(<App />, document.getElementById('root'));
