@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="cursor: url('/Styles/cursor.png'), default;">
+<html lang="en" style="cursor: url('./Styles/cursor.png'), default;">
 
 <head>
     <meta charset="UTF-8">
@@ -12,14 +12,15 @@
 <body>
     <nav id="navegacao">
         <a href="storage.html">Storage</a>
-        
     </nav>
-    <img id="Imagem">
-    <h1 id="H1">Realtime Database - Firebase</h1>
+    <div id="Title-Img">
+        <h1 id="H1">Realtime Database - Firebase</h1>
+        <img id="Imagem">
+    </div>
     <div id="DadosDIV">
         <input type="number" id="inputId" placeholder="Id" min="0">
         <input id="inputName" placeholder="Nome">
-        <input type="number" id="inputAge" placeholder="Idade" min="0">        
+        <input type="number" id="inputAge" placeholder="Idade" min="0">
         <button onclick="salvarDado()" id="btnSalvaDado"> Salvar Dado </button>
         <input id="removeId" placeholder="Id para remover">
         <button onclick="removerDado()" id="btnRemoveID"> Remover Dado </button>
